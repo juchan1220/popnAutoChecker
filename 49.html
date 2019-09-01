@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <title>팝픈뮤직 49레벨 서열표 자동색칠</title>
+  
+ </head>
+ <body>
+	<div style = "margin: auto; text-align:center">
+	<div id = "chart" style = "position:relative; width:850px; margin:auto">
+		<img src = "chart49.png"/>
+		<div style = "position: absolute; top:232px; left:104px;">
+			<img src = "base_pa.png" height = "18px"/>
+		</div>
+		
+	</div>
+	<input type = "button" value = "save" onclick = "save();">
+	</div>
+
+	 <script>
+		function save(){
+			html2canvas(document.querySelector("#chart"), {width: 850, height: 975, x:document.querySelector("#chart").offsetLeft + 8, y:document.querySelector("#chart").offsetTop}).then(canvas => {
+				var a = document.createElement('a');
+				a.href = canvas.toDataURL();
+				a.download = "49.png";
+				a.click();
+			});
+		}
+	</script>
+	<script src = "html2canvas.min.js"></script>
+ </body>
+</html>

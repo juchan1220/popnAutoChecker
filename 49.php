@@ -59,9 +59,9 @@
 		</div>
 	</div>
 
-	<div style = "margin: auto; text-align:center">
-		<div id = "chart" style = "position:relative; width:850px; margin:auto">
-			<img src = "chart49.png"/>
+	<div id = "bg" style = "margin: auto; text-align:center">
+		<div id = "chart" style = "position:relative; margin:auto; width:850px">
+			<img id = "img" src = "chart49.png"/>
 		</div>
 	</div>
 
@@ -80,8 +80,8 @@
 				try{
 					var div = document.createElement('div');
 					div.style.position = "absolute";
-					div.style.left = Number(ordData[title][0]) + 2 + "px"
-					div.style.top = Number(ordData[title][1]) - 2 + "px"
+					div.style.left = ((Number(ordData[title][0]))) + 3 + "px"
+					div.style.top = ((Number(ordData[title][1]))) -2 + "px"
 
 					var img = document.createElement('img');
 					img.src = postData[title];
@@ -94,17 +94,19 @@
 				catch(e){
 					console.log(title + " 곡이 색칠되지 않았습니다.")
 				}
-
 			}
 		}
 
+		html2canvas(document.querySelector("#chart"), { x:document.querySelector("#chart").offsetLeft + 8, y:document.querySelector("#chart").offsetTop}).then(canvas => {
+			document.querySelector("#chart").style.display = "none"
+			document.querySelector("#bg").appendChild(canvas)
+		});
+
 		function save(){
-			html2canvas(document.querySelector("#chart"), {width: 850, height: 975, x:document.querySelector("#chart").offsetLeft + 8, y:document.querySelector("#chart").offsetTop}).then(canvas => {
-				var a = document.createElement('a');
-				a.href = canvas.toDataURL();
-				a.download = "49.png";
-				a.click();
-			});
+			var a = document.createElement('a');
+			a.href = document.querySelector("canvas").toDataURL();
+			a.download = "49.png"
+			a.click();
 		}
 	</script>
 </body>

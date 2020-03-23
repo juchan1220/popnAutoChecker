@@ -13,7 +13,7 @@ function getPage (currentPage, lastPage)
         input.setAttribute('name', 'data')
 
         form.setAttribute('method', 'post');
-        form.setAttribute('action', "https://popn.nulldori.tk/49.php");
+        form.setAttribute('action', "https://popn.nulldori.tech/49.php");
 
         form.appendChild(input)
         document.body.appendChild(form);

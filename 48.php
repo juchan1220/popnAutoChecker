@@ -1,12 +1,10 @@
-<!DOCTYPE HTML>
+<!doctype html>
 <html lang="ko">
  <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>팝픈뮤직 49레벨 서열표 자동색칠 - AutoChecker</title>
+  <title>팝픈뮤직 48레벨 서열표 자동색칠 - AutoChecker</title>
   	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400&display=swap&subset=korean" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/popn.css"/>
  </head>
  <body style = "padding-top: 70px; padding-bottom: 70px; font-family: 'Noto Sans KR', sans-serif;">
 	<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary" style = "margin: 0 auto">
@@ -29,21 +27,28 @@
 						<a class = "dropdown-item" href = "49.php">LV.49</a>
 					</div>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">SDVX</a>
+				</li>
 			</ul>
 		</div>
 	</nav>
 
 	<div class = "container" style = "padding-top: 50px; margin: 0 auto;">
 		<div class = "page-header">
-			<h2>팝픈뮤직 49레벨 서열표</h2>
+			<h1>팝픈뮤직 48레벨 서열표 자동색칠도구</h1>
 		</div>
 
 		<p>
-		팝픈뮤직 49레벨 서열표를 유저의 플레이 데이터를 기반으로 칠하도록 만들어진 사이트입니다. 사용법은 아래와 같습니다.
+		팝픈뮤직 48레벨 서열표를 유저의 플레이 데이터를 기반으로 칠하도록 만들어진 사이트입니다. 사용법은 아래와 같습니다.
 		</p>
 
+
+		<div class="alert alert-info" role="alert">
+				현재 PC Firefox / iOS Safari / Android Firefox 에서 동작을 확인했습니다.
+		</div>
 		<div class="alert alert-warning" role="alert">
-			Firefox 이외의 브라우저, 특히 Opera의 경우에는 기술적인 이슈로 인해 정상적으로 동작하지 않을 수 있습니다. Firefox 이용을 권장합니다.
+			Opera와 Chrome의 경우, data URI의 길이 제한으로 인해 정상적으로 사용할 수 없습니다. Firefox 이용을 권장합니다.
 		</div>
 
 		<div class = "card">
@@ -55,9 +60,9 @@
 					1. <a href = "https://p.eagate.573.jp" target="_blank">e-AMUSEMENT 사이트</a>에서 e-AMUSEMENT 베이직 코스에 가입되어 있는 계정으로 로그인합니다.
 					</li>
 					<li class = "list-group-item">
-					2. <code style = "word-break: break-all">javascript:var s=document.createElement("script");s.src="https://popn.nulldori.tech/js/49.js";s.type="text/javascript";document.getElementsByTagName("body")[0].appendChild(s);</code> 를 주소창에 입력하고 실행합니다.<br><br>
+					2. <code style = "word-break: break-all">javascript:var s=document.createElement("script");s.src="https://popn.nulldori.tech/js/48.js";s.type="text/javascript";document.getElementsByTagName("body")[0].appendChild(s);</code> 를 주소창에 입력하고 실행합니다.<br><br>
 					PC Firefox, iOS Safari에서는 주소창 javascript를 사용할 수 없으므로 위의 방법이 아닌 다른 방법을 사용해야 합니다.<br>
-					2-1. iOS Safari의 경우, 임의의 사이트를 북마크에 추가하고나서 해당 북마크의 주소 적힌 코드로 수정합니다. 그 후, e-AMUSEMENT 사이트에서 해당 북마크를 엽니다.<br>
+					2-1. iOS Safari의 경우, 아무 사이트나 북마크에 추가한 뒤 편집에 들어가 주소 부분을 위에 적힌 코드로 수정합니다. 그 후, e-AMUSEMENT 사이트에서 해당 북마크를 엽니다.<br>
 					2-2. PC Firefox의 경우, e-AMUSEMENT 사이트에서 F12를 눌러 개발자 옵션을 킨 뒤, 콘솔 탭에 들어가 위에 적힌 코드를 입력합니다.
 					</li>
 					<li class = "list-group-item">
@@ -69,36 +74,35 @@
 		<div style = "text-align:center; margin-top: 50px; margin-bottom:50px;">
 			<button type="button" class="btn btn-primary btn-lg" onclick = "save();">Download</button>
 		</div>
-
-        <div style = "margin: auto; text-align:center">
-            <div id = "chart" style = "position:relative; margin:0 auto;">
-                <canvas id='chartCanvas' style='width: 100%'>
-            </div>
-        </div>
 	</div>
 
+	<div style = "margin: auto; text-align:center">
+		<div id = "chart" style = "position:relative; margin:0 auto; width:850px">
+		</div>
+	</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script src = "js/ord49.js" type = "text/javascript"></script>
+	<script src = "js/ord48.js" type = "text/javascript"></script>
 	<script src = "js/html2canvas.min.js"></script>
 	<script>
 		var postData = <?php if(isset($_POST['data'])) print(urldecode($_POST['data'])); else print("\"\""); ?>
 
-		ordData = JSON.parse(ordData);
+		ordData = JSON.parse(ordData)
 
 		function drawMedal(medalType){
 			if(medalType > 107){
+				document.querySelector("#chart").appendChild(canvas)
 				return ;
 			}
-			let medal = new Image();
-			medal.src = "/assets/meda_" + String.fromCharCode(medalType) + ".png";
+			var medal = new Image()
+			medal.src = "/assets/meda_" + String.fromCharCode(medalType) + ".png"
 			medal.onload = function(){
-				for(let title in postData){
+				for(var title in postData){
 					if(postData[title] === "meda_" + String.fromCharCode(medalType) + ".png"){
 						try{
-							ctx.drawImage(medal, (Number(ordData[title][0]) + 4) * canvas.width / 1600, (Number(ordData[title][1]) + 4) * canvas.width / 1600, 18 * canvas.width / 850, 18 * canvas.width / 850)
+							ctx.drawImage(medal, (Number(ordData[title][0]) * 850 / 1597) + 1, (Number(ordData[title][1]) * 850 / 1597) + 2, 18, 18)
 						}
 						catch(e){
 							console.log(title + " 곡이 색칠되지 않았습니다.")
@@ -109,23 +113,23 @@
 			}
 		}
 
-		var canvas = document.querySelector('#chartCanvas');
-		canvas.width = 850;
-		canvas.height = 924;
-		console.log(canvas.width, canvas.height);
+		var canvas = document.createElement('canvas');
 		var ctx = canvas.getContext('2d');
 
+		canvas.width = 850;
+		canvas.height = 1193;
+
 		var chartBase = new Image();
-		chartBase.src = "/assets/chart49.png";
+		chartBase.src = "/assets/chart48.png";
 		chartBase.onload = function(){
-			ctx.drawImage(chartBase,0,0,canvas.width, canvas.height);
+			ctx.drawImage(chartBase,0,0);
 			drawMedal(97)
-		}
+		};
 
 		function save(){
-				let a = document.createElement('a');
+				var a = document.createElement('a');
 				a.href = canvas.toDataURL();
-				a.download = "49.png";
+				a.download = "48.png";
 				a.style.display = "none";
 				document.body.appendChild(a);
 				a.click();

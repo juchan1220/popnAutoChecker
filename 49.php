@@ -6,7 +6,7 @@
   <title>팝픈뮤직 49레벨 서열표 자동색칠 - AutoChecker</title>
   	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400&display=swap&subset=korean" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/popn.css"/>
+    <link rel="stylesheet" href="/assets/css/popn.css"/>
  </head>
  <body style = "padding-top: 70px; padding-bottom: 70px; font-family: 'Noto Sans KR', sans-serif;">
 	<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary" style = "margin: 0 auto">
@@ -69,20 +69,20 @@
 		<div style = "text-align:center; margin-top: 50px; margin-bottom:50px;">
 			<button type="button" class="btn btn-primary btn-lg" onclick = "save();">Download</button>
 		</div>
-
-        <div style = "margin: auto; text-align:center">
-            <div id = "chart" style = "position:relative; margin:0 auto;">
-                <canvas id='chartCanvas' style='width: 100%'>
-            </div>
-        </div>
 	</div>
+
+    <div style = "margin: auto; text-align:center">
+        <div id = "chart" style = "position:relative; margin:0 auto;">
+            <canvas id='chartCanvas' style='width: 100%'>
+        </div>
+    </div>
 
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script src = "js/ord49.js" type = "text/javascript"></script>
-	<script src = "js/html2canvas.min.js"></script>
+	<script src = "assets/js/ord49.js" type = "text/javascript"></script>
+	<script src = "assets/js/html2canvas.min.js"></script>
 	<script>
 		var postData = <?php if(isset($_POST['data'])) print(urldecode($_POST['data'])); else print("\"\""); ?>
 
@@ -93,7 +93,7 @@
 				return ;
 			}
 			let medal = new Image();
-			medal.src = "/assets/meda_" + String.fromCharCode(medalType) + ".png";
+			medal.src = "/assets/images/meda_" + String.fromCharCode(medalType) + ".png";
 			medal.onload = function(){
 				for(let title in postData){
 					if(postData[title] === "meda_" + String.fromCharCode(medalType) + ".png"){
@@ -112,11 +112,10 @@
 		var canvas = document.querySelector('#chartCanvas');
 		canvas.width = 850;
 		canvas.height = 924;
-		console.log(canvas.width, canvas.height);
 		var ctx = canvas.getContext('2d');
 
 		var chartBase = new Image();
-		chartBase.src = "/assets/chart49.png";
+		chartBase.src = "/assets/images/chart49.png";
 		chartBase.onload = function(){
 			ctx.drawImage(chartBase,0,0,canvas.width, canvas.height);
 			drawMedal(97)

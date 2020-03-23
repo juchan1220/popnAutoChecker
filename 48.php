@@ -42,11 +42,6 @@
 		팝픈뮤직 48레벨 서열표를 유저의 플레이 데이터를 기반으로 칠하도록 만들어진 사이트입니다. 사용법은 아래와 같습니다.
 		</p>
 
-
-        <div class="alert alert-warning" role="alert">
-            Firefox 이외의 브라우저, 특히 Opera의 경우에는 기술적인 이슈로 인해 정상적으로 동작하지 않을 수 있습니다. Firefox 이용을 권장합니다.
-        </div>
-
         <div class = "card">
             <div class = "card-header">
                 사용법
@@ -56,7 +51,7 @@
                     1. <a href = "https://p.eagate.573.jp" target="_blank">e-AMUSEMENT 사이트</a>에서 e-AMUSEMENT 베이직 코스에 가입되어 있는 계정으로 로그인합니다.
                 </li>
                 <li class = "list-group-item">
-                    2. <code style = "word-break: break-all">javascript:var s=document.createElement("script");s.src="https://popn.nulldori.tech/js/49.js";s.type="text/javascript";document.getElementsByTagName("body")[0].appendChild(s);</code> 를 주소창에 입력하고 실행합니다.<br><br>
+                    2. <code style = "word-break: break-all">javascript:var s=document.createElement("script");s.src="https://popn.nulldori.tech/assets/js/48.js";s.type="text/javascript";document.getElementsByTagName("body")[0].appendChild(s);</code> 를 주소창에 입력하고 실행합니다.<br><br>
                     PC Firefox, iOS Safari에서는 주소창 javascript를 사용할 수 없으므로 위의 방법이 아닌 다른 방법을 사용해야 합니다.<br>
                     2-1. iOS Safari의 경우, 임의의 사이트를 북마크에 추가하고나서 해당 북마크의 주소 적힌 코드로 수정합니다. 그 후, e-AMUSEMENT 사이트에서 해당 북마크를 엽니다.<br>
                     2-2. PC Firefox의 경우, e-AMUSEMENT 사이트에서 F12를 눌러 개발자 옵션을 킨 뒤, 콘솔 탭에 들어가 위에 적힌 코드를 입력합니다.
@@ -84,19 +79,21 @@
 	<script src = "assets/js/ord48.js" type = "text/javascript"></script>
 	<script src = "assets/js/html2canvas.min.js"></script>
 	<script>
-		var postData = <?php if(isset($_POST['data'])) print(urldecode($_POST['data'])); else print("\"\""); ?>
+		let postData = <?php if(isset($_POST['data'])) print(urldecode($_POST['data'])); else print("\"\""); ?> ;
 
-		ordData = JSON.parse(ordData)
+		// ordData from ordLV.js
+		ordData = JSON.parse(ordData);
 
 		function drawMedal(medalType){
 			if(medalType > 107){
-				document.querySelector("#chart").appendChild(canvas)
+				document.querySelector("#chart").appendChild(canvas);
 				return ;
 			}
-			var medal = new Image()
-			medal.src = "/assets/images/meda_" + String.fromCharCode(medalType) + ".png"
+
+			let medal = new Image();
+			medal.src = "/assets/images/meda_" + String.fromCharCode(medalType) + ".png";
 			medal.onload = function(){
-				for(var title in postData){
+				for(let title in postData){
 					if(postData[title] === "meda_" + String.fromCharCode(medalType) + ".png"){
 						try{
 							ctx.drawImage(medal, (Number(ordData[title][0]) * 850 / 1597) + 1, (Number(ordData[title][1]) * 850 / 1597) + 2, 18, 18)
@@ -110,26 +107,28 @@
 			}
 		}
 
-        var canvas = document.querySelector('#chartCanvas');
+        let canvas = document.querySelector('#chartCanvas');
         canvas.width = 850;
         canvas.height = 1193;
-        var ctx = canvas.getContext('2d');
+        let ctx = canvas.getContext('2d');
 
-		var chartBase = new Image();
+		let chartBase = new Image();
 		chartBase.src = "/assets/images/chart48.png";
 		chartBase.onload = function(){
 			ctx.drawImage(chartBase,0,0);
 			drawMedal(97)
 		};
 
-		function save(){
-				var a = document.createElement('a');
-				a.href = canvas.toDataURL();
-				a.download = "48.png";
-				a.style.display = "none";
-				document.body.appendChild(a);
-				a.click();
-		}
+        function save(){
+            canvas.toBlob((blob) => {
+                let a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = "48.png";
+                a.style.display = "none";
+                document.body.appendChild(a);
+                a.click();
+            });
+        }
 	</script>
 </body>
 </html>

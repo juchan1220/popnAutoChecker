@@ -53,7 +53,7 @@
                 <li class = "list-group-item">
                     2. <code style = "word-break: break-all">javascript:var s=document.createElement("script");s.src="https://popn.nulldori.tech/assets/js/48.js";s.type="text/javascript";document.getElementsByTagName("body")[0].appendChild(s);</code> 를 주소창에 입력하고 실행합니다.<br><br>
                     PC Firefox, iOS Safari에서는 주소창 javascript를 사용할 수 없으므로 위의 방법이 아닌 다른 방법을 사용해야 합니다.<br>
-                    2-1. iOS Safari의 경우, 임의의 사이트를 북마크에 추가하고나서 해당 북마크의 주소 적힌 코드로 수정합니다. 그 후, e-AMUSEMENT 사이트에서 해당 북마크를 엽니다.<br>
+                    2-1. iOS Safari의 경우, 임의의 사이트를 북마크에 추가하고나서 해당 북마크의 주소를 위에 적힌 코드로 수정합니다. 그 후, e-AMUSEMENT 사이트에 접속한 뒤 해당 북마크를 엽니다.<br>
                     2-2. PC Firefox의 경우, e-AMUSEMENT 사이트에서 F12를 눌러 개발자 옵션을 킨 뒤, 콘솔 탭에 들어가 위에 적힌 코드를 입력합니다.
                 </li>
                 <li class = "list-group-item">
@@ -81,9 +81,6 @@
 	<script>
 		let postData = <?php if(isset($_POST['data'])) print(urldecode($_POST['data'])); else print("\"\""); ?> ;
 
-		// ordData from ordLV.js
-		ordData = JSON.parse(ordData);
-
 		function drawMedal(medalType){
 			if(medalType > 107){
 				document.querySelector("#chart").appendChild(canvas);
@@ -96,7 +93,7 @@
 				for(let title in postData){
 					if(postData[title] === "meda_" + String.fromCharCode(medalType) + ".png"){
 						try{
-							ctx.drawImage(medal, (Number(ordData[title][0]) * 850 / 1597) + 1, (Number(ordData[title][1]) * 850 / 1597) + 2, 18, 18)
+							ctx.drawImage(medal, (Number(ordData[title][0])) + 1, (Number(ordData[title][1])) + 2)
 						}
 						catch(e){
 							console.log(title + " 곡이 색칠되지 않았습니다.")
@@ -108,14 +105,14 @@
 		}
 
         let canvas = document.querySelector('#chartCanvas');
-        canvas.width = 850;
-        canvas.height = 1193;
+        canvas.width = 1590;
+        canvas.height = 2324;
         let ctx = canvas.getContext('2d');
 
 		let chartBase = new Image();
-		chartBase.src = "/assets/images/chart48.png";
+		chartBase.src = "/assets/images/chart48.jpg";
 		chartBase.onload = function(){
-			ctx.drawImage(chartBase,0,0);
+            ctx.drawImage(chartBase,0,0,canvas.width, canvas.height);
 			drawMedal(97)
 		};
 

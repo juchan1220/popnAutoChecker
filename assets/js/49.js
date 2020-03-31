@@ -32,9 +32,13 @@ function getPage (currentPage, lastPage)
         $(data, virtualDocument).find("ul.mu_list_table li").each(function(){
             if($(this).find("div.th_music_lv").length === 0){
                 let title = $(this).find("a")[0].textContent;
-                let imgsrc = $(this).find("div.col_ex_lv img")[0].getAttribute("src").split('/');
-                let medal = imgsrc[imgsrc.length - 1];
-                medalData[title] = medal;
+                let medal_imgsrc = $(this).find("div.col_ex_lv img")[0].getAttribute("src").split('/');
+                let rank_imgsrc = $(this).find("div.col_ex_lv img")[1].getAttribute("src").split('/');
+                let medal = medal_imgsrc[medal_imgsrc.length - 1];
+                let rank = rank_imgsrc[rank_imgsrc.length - 1];
+                let score = $(this).find("div.col_ex_lv")[0].textContent;
+
+                medalData[title] = {medal, rank, score};
             }
         });
 

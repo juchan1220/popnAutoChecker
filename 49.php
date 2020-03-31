@@ -62,15 +62,18 @@
 				</ul>
 		</div>
 
-		<div style = "text-align:center; margin-top: 50px; margin-bottom:50px;">
-			<button type="button" class="btn btn-primary btn-lg" onclick = "save();">Download</button>
-		</div>
-	</div>
+      <div style = "text-align:center; margin-top: 50px; margin-bottom:50px;">
+        <button type="button" class="btn btn-primary btn-lg" onclick = "saveMedal();">메달 저장</button>
+        <button type="button" class="btn btn-primary btn-lg" style="margin-left: 12px;" onclick = "saveRank();">랭크 저장</button>
+
+      </div>
+    </div>
 
     <div style = "margin: auto; text-align:center">
-        <div id = "chart" style = "position:relative; margin:0 auto;">
-            <canvas id='chartCanvas' style='width: 100%'>
-        </div>
+      <div id = "chart" style = "position:relative; margin:0 auto;">
+        <canvas id='medalCanvas' style='width: 100%'></canvas>
+        <canvas id='rankCanvas' style='width: 100%'></canvas>
+      </div>
     </div>
 
 
@@ -78,53 +81,109 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script src = "assets/js/ord49.js" type = "text/javascript"></script>
-	<script src = "assets/js/html2canvas.min.js"></script>
 	<script>
-		var postData = <?php if(isset($_POST['data'])) print(urldecode($_POST['data'])); else print("\"\""); ?>;
+        let postData = <?php if(isset($_POST['data'])) print(urldecode($_POST['data'])); else print("\"\""); ?> ;
 
-		function drawMedal(medalType){
-			if(medalType > 107){
-				return ;
-			}
-			let medal = new Image();
-			medal.src = "/assets/images/meda_" + String.fromCharCode(medalType) + ".png";
-			medal.onload = function(){
-				for(let title in postData){
-					if(postData[title] === "meda_" + String.fromCharCode(medalType) + ".png"){
-						try{
-							ctx.drawImage(medal, (Number(ordData[title][0]) + 4) * canvas.width / 1600, (Number(ordData[title][1]) + 4) * canvas.width / 1600)
-						}
-						catch(e){
-							console.log(title + " 곡이 색칠되지 않았습니다.")
-						}
-					}
-				}
-				drawMedal(medalType + 1)
-			}
-		}
+        function drawMedal(medalType){
+            if(medalType > 107){
+                return ;
+            }
 
-		let canvas = document.querySelector('#chartCanvas');
-		canvas.width = 1600;
-		canvas.height = 1831;
-		let ctx = canvas.getContext('2d');
+            let medal = new Image();
+            medal.src = "/assets/images/meda_" + String.fromCharCode(medalType) + ".png";
+            medal.onload = function(){
+                for(let title in postData){
+                    if(postData[title].hasOwnProperty('medal') &&
+                        postData[title]['medal'] === "meda_" + String.fromCharCode(medalType) + ".png"){
+                        try{
+                            medalCtx.drawImage(medal, (Number(ordData[title][0])) + 3, (Number(ordData[title][1])) + 4)
+                        }
+                        catch(e){
+                            console.log(title + " 곡이 색칠되지 않았습니다.")
+                        }
+                    }
+                }
+                drawMedal(medalType + 1)
+            }
+        }
 
-		let chartBase = new Image();
-		chartBase.src = "/assets/images/chart49.jpg";
-		chartBase.onload = function(){
-			ctx.drawImage(chartBase,0,0,canvas.width, canvas.height);
-			drawMedal(97)
-		};
 
-		function save(){
-            canvas.toBlob((blob) => {
+        function drawRank(rankName){
+            let rankImage = new Image();
+            let rankNameIndex = rankPriorityByName.findIndex(e => e === rankName);
+            rankImage.src = "/assets/images/" + rankName + '.png';
+            rankImage.onload = () => {
+                for(let title in postData){
+                    let score = Number(postData[title]['score']);
+                    let rank = postData[title]['rank'];
+                    // 0점인 경우에는 무시
+                    if(score === 0) continue;
+
+                    let namePriority = rankPriorityByName.findIndex(e => rank.indexOf(e) !== -1);
+                    let scorePriority = rankPriorityByScore.reduce((acc, cur) => acc + (cur(score) ? 1 : 0), 0);
+
+                    // 랭크와 스코어 둘 중 높은 쪽을 적용하여 색칠
+                    if(rankNameIndex === Math.max(namePriority, scorePriority)){
+                        rankCtx.drawImage(rankImage, (Number(ordData[title][0])) + 2, (Number(ordData[title][1])) + 1, 40, 40);
+                    }
+                }
+            }
+        }
+
+        let medalCanvas = document.querySelector('#medalCanvas');
+        let rankCanvas = document.querySelector('#rankCanvas');
+        medalCanvas.width = rankCanvas.width = 1600;
+        medalCanvas.height = rankCanvas.height = 1831;
+
+        let medalCtx = medalCanvas.getContext('2d');
+        let rankCtx = rankCanvas.getContext('2d');
+
+
+        let rankPriorityByName = ['rank_e', 'rank_d', 'rank_c', 'rank_b', 'rank_a1', 'rank_a2', 'rank_a3', 'rank_s'];
+        let rankPriorityByScore = [
+            score => Number(score) >= 98000,
+            score => Number(score) >= 95000,
+            score => Number(score) >= 90000,
+            score => Number(score) >= 82000,
+            score => Number(score) >= 72000,
+            score => Number(score) >= 62000,
+            score => Number(score) >= 50000,
+        ];
+
+
+        let chartBase = new Image();
+        chartBase.src = "/assets/images/chart49.jpg";
+        chartBase.onload = function(){
+            medalCtx.drawImage(chartBase,0,0, medalCanvas.width, medalCanvas.height);
+            drawMedal(97);
+
+            rankCtx.drawImage(chartBase, 0, 0, rankCanvas.width, rankCanvas.height);
+            rankPriorityByName.forEach(rankName => {
+                drawRank(rankName);
+            })
+        };
+
+        function saveMedal(){
+            medalCanvas.toBlob((blob) => {
                 let a = document.createElement('a');
                 a.href = URL.createObjectURL(blob);
-                a.download = "49.png";
+                a.download = "49_medal.png";
                 a.style.display = "none";
                 document.body.appendChild(a);
                 a.click();
             });
-		}
+        }
+
+        function saveRank(){
+            rankCanvas.toBlob((blob) => {
+                let a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = "49_rank.png";
+                a.style.display = "none";
+                document.body.appendChild(a);
+                a.click();
+            });
+        }
 	</script>
 </body>
 </html>

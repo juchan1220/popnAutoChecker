@@ -95,7 +95,7 @@
                     if(postData[title].hasOwnProperty('medal') &&
                         postData[title]['medal'] === "meda_" + String.fromCharCode(medalType) + ".png"){
                         try{
-							medalCtx.drawImage(medal, (Number(ordData[title][0])) + 1, (Number(ordData[title][1])) + 2)
+							medalCtx.drawImage(medal, (Number(ordData[title][0])) + 1, (Number(ordData[title][1])) + 2, 35, 35)
 						}
 						catch(e){
 							console.log(title + " 곡이 색칠되지 않았습니다.")
@@ -131,8 +131,8 @@
 
         let medalCanvas = document.querySelector('#medalCanvas');
         let rankCanvas = document.querySelector('#rankCanvas');
-        medalCanvas.width = rankCanvas.width = 1590;
-        medalCanvas.height = rankCanvas.height = 2324;
+        medalCanvas.width = rankCanvas.width = 1500;
+        medalCanvas.height = rankCanvas.height = 2192;
 
         let medalCtx = medalCanvas.getContext('2d');
         let rankCtx = rankCanvas.getContext('2d');
@@ -151,7 +151,7 @@
 
 
 		let chartBase = new Image();
-		chartBase.src = "/assets/images/chart48.jpg";
+		chartBase.src = isDev ? "/assets/images/chart48_new.jpg" : "/assets/images/chart48.jpg";
 		chartBase.onload = function(){
             medalCtx.drawImage(chartBase,0,0, medalCanvas.width, medalCanvas.height);
 			drawMedal(97);

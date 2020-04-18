@@ -93,10 +93,10 @@
             medal.src = "/assets/images/meda_" + String.fromCharCode(medalType) + ".png";
             medal.onload = function(){
                 for(let title in postData){
-                    if(postData[title].hasOwnProperty('medal') &&
-                        postData[title]['medal'] === "meda_" + String.fromCharCode(medalType) + ".png"){
+                    if((postData[title].hasOwnProperty('medal') &&
+                        postData[title]['medal'] === "meda_" + String.fromCharCode(medalType) + ".png" )){
                         try{
-                            medalCtx.drawImage(medal, (Number(ordData[title][0])) + 3, (Number(ordData[title][1])) + 4)
+                            medalCtx.drawImage(medal, (Number(ordData[title][0])) + 3, (Number(ordData[title][1])) + 4, 35, 35)
                         }
                         catch(e){
                             console.log(title + " 곡이 색칠되지 않았습니다.")
@@ -132,8 +132,8 @@
 
         let medalCanvas = document.querySelector('#medalCanvas');
         let rankCanvas = document.querySelector('#rankCanvas');
-        medalCanvas.width = rankCanvas.width = 1600;
-        medalCanvas.height = rankCanvas.height = 1831;
+        medalCanvas.width = rankCanvas.width = 1500;
+        medalCanvas.height = rankCanvas.height = 1779;
 
         let medalCtx = medalCanvas.getContext('2d');
         let rankCtx = rankCanvas.getContext('2d');
@@ -149,6 +149,7 @@
             score => Number(score) >= 62000,
             score => Number(score) >= 50000,
         ];
+
 
 
         let chartBase = new Image();

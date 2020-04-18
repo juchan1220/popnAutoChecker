@@ -151,7 +151,7 @@
 
 
 		let chartBase = new Image();
-		chartBase.src = isDev ? "/assets/images/chart48_new.jpg" : "/assets/images/chart48.jpg";
+		chartBase.src = "/assets/images/chart48.jpg";
 		chartBase.onload = function(){
             medalCtx.drawImage(chartBase,0,0, medalCanvas.width, medalCanvas.height);
 			drawMedal(97);

@@ -51,7 +51,7 @@
                     1. <a href = "https://p.eagate.573.jp" target="_blank">e-AMUSEMENT 사이트</a>에서 e-AMUSEMENT 베이직 코스에 가입되어 있는 계정으로 로그인합니다.
                 </li>
                 <li class = "list-group-item">
-                    2. <code style = "word-break: break-all">javascript:var s=document.createElement("script");s.src="https://popn.nulldori.tech/assets/js/48.js";s.type="text/javascript";document.getElementsByTagName("body")[0].appendChild(s);</code> 를 주소창에 입력하고 실행합니다.<br><br>
+                    2. <code style = "word-break: break-all">javascript:var s=document.createElement("script");s.src="https://popn.nulldori.dev/assets/js/48.js";s.type="text/javascript";document.getElementsByTagName("body")[0].appendChild(s);</code> 를 주소창에 입력하고 실행합니다.<br><br>
                     PC Firefox, iOS Safari에서는 주소창 javascript를 사용할 수 없으므로 위의 방법이 아닌 다른 방법을 사용해야 합니다.<br>
                     2-1. iOS Safari의 경우, 임의의 사이트를 북마크에 추가하고나서 해당 북마크의 주소를 위에 적힌 코드로 수정합니다. 그 후, e-AMUSEMENT 사이트에 접속한 뒤 해당 북마크를 엽니다.<br>
                     2-2. PC Firefox의 경우, e-AMUSEMENT 사이트에서 F12를 눌러 개발자 옵션을 킨 뒤, 콘솔 탭에 들어가 위에 적힌 코드를 입력합니다.

@@ -1,6 +1,6 @@
 팝픈뮤직 서열표 자동색칠 사이트
 =
-Live: https://popn.nulldori.tech
+Live: https://popn.nulldori.dev
 
 
 TODO

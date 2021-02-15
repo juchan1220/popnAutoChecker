@@ -1,4 +1,4 @@
-// javascript:var s=document.createElement("script");s.src="https://popn.nulldori.tech/48.js";s.type="text/javascript";document.getElementsByTagName("body")[0].appendChild(s);
+// javascript:var s=document.createElement("script");s.src="https://popn.nulldori.dev/49.js";s.type="text/javascript";document.getElementsByTagName("body")[0].appendChild(s);
 
 let TARGET_LEVEL = 49
 let BASE_URL = "https://p.eagate.573.jp/game/popn/riddles/playdata/mu_lv.html"
@@ -53,7 +53,7 @@ function sendData() {
     input.setAttribute('name', 'data')
 
     form.setAttribute('method', 'post')
-    form.setAttribute('action', `https://popn.nulldori.tech/${TARGET_LEVEL}.php`)
+    form.setAttribute('action', `https://popn.nulldori.dev/${TARGET_LEVEL}.php`)
 
     form.appendChild(input)
     document.body.appendChild(form)
